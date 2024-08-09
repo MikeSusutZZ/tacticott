@@ -50,10 +50,10 @@ function PokemonCard({ pokemon }) {
         <Card.Title>{pokemon.pokemon_name.charAt(0).toUpperCase() + pokemon.pokemon_name.slice(1)}</Card.Title>
         <Radar
             data={{
-              labels: ['Speed', 'Off', 'SSu', 'ASa', 'SuS', 'ObS', 'Blk'],
+              labels: ['Speed', 'Offense', 'Self Set-up', 'Allied Set-up', 'Set-up Support', 'Obs Support', 'Bulk'],
               datasets: [
                 {
-                  label: `${pokemon.pokemon_name} Stats`,
+                    label: pokemon.pokemon_name.charAt(0).toUpperCase() + pokemon.pokemon_name.slice(1),
                   data: [
                     pokemon.stats.speed.average,
                     pokemon.stats.off.average,
