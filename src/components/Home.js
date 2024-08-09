@@ -3,13 +3,15 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import PokemonCard from './PokemonCard';
 
+const PORT = 'http://localhost:5000'
+
 function Home() {
   const [pokemonList, setPokemonList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     // Fetch Pokémon from the backend
-    axios.get('/api/pokemon')
+    axios.get(`${PORT}/api/pokemon`)
       .then(response => setPokemonList(response.data))
       .catch(error => console.error('Error fetching Pokémon data:', error));
   }, []);
@@ -17,11 +19,11 @@ function Home() {
   const handleSearch = () => {
     // Handle search logic here
     if (!searchQuery) {
-      axios.get('/api/pokemon')
+      axios.get(`${PORT}/api/pokemon`)
         .then(response => setPokemonList(response.data))
         .catch(error => console.error('Error fetching Pokémon data:', error));
     } else {
-      axios.get(`/api/pokemon/${searchQuery}`)
+      axios.get(`${PORT}/api/pokemon/${searchQuery}`)
         .then(response => setPokemonList([response.data]))
         .catch(error => console.error('Error fetching Pokémon data:', error));
     }

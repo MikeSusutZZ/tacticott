@@ -12,13 +12,20 @@ function Compare() {
     e.preventDefault();
     try {
       const responses = await Promise.all(
-        pokemonNames.filter(name => name).map(name => axios.get(`/api/pokemon/${name.toLowerCase()}`))
+        pokemonNames.filter(name => name).map(name => axios.get(`http://localhost:5000/api/pokemon/${name.toLowerCase()}`))
       );
       setComparisonData(responses.map(res => res.data));
     } catch (error) {
       console.error('Error comparing Pokémon:', error);
     }
   };
+
+  const colors = [
+    { backgroundColor: 'rgba(34, 202, 236, 0.2)', borderColor: 'rgba(34, 202, 236, 1)' },  // Blue
+    { backgroundColor: 'rgba(255, 99, 132, 0.2)', borderColor: 'rgba(255, 99, 132, 1)' },  // Red
+    { backgroundColor: 'rgba(75, 192, 192, 0.2)', borderColor: 'rgba(75, 192, 192, 1)' },  // Green
+    { backgroundColor: 'rgba(255, 205, 86, 0.2)', borderColor: 'rgba(255, 205, 86, 1)' },  // Yellow
+  ];
 
   return (
     <Container>
@@ -37,7 +44,6 @@ function Compare() {
                     newNames[index] = e.target.value;
                     setPokemonNames(newNames);
                   }}
-                  required
                 />
               </Form.Group>
             </Col>
@@ -70,8 +76,8 @@ function Compare() {
                   pokemon.stats.obs.average,
                   pokemon.stats.blk.average
                 ],
-                backgroundColor: `rgba(${index * 50}, 99, 132, 0.2)`,
-                borderColor: `rgba(${index * 50}, 99, 132, 1)`,
+                backgroundColor: colors[index].backgroundColor,
+                borderColor: colors[index].borderColor,
                 borderWidth: 2
               }))
             }}

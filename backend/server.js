@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 dotenv.config();
 
@@ -9,10 +10,16 @@ const port = process.env.PORT || 5000;
 
 const pokemonRoutes = require('./routes/pokemon');
 
+// Enable CORS before defining any routes
+app.use(cors()); 
+
+// Middleware to parse JSON bodies
 app.use(express.json());
+
+// Define routes
 app.use('/api/pokemon', pokemonRoutes);
 
-
+// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -20,6 +27,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log('MongoDB connected'))
 .catch((err) => console.log(err));
 
+// Start the server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
