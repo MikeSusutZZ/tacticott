@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import PokemonCard from './PokemonCard';
 
-const PORT = 'http://localhost:5000'
+const PORT = 'https://tacticott-backend.vercel.app/'
 
 function Home() {
   const [pokemonList, setPokemonList] = useState([]);
