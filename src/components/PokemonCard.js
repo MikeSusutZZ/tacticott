@@ -26,31 +26,31 @@ ChartJS.register(
 
 // Define a mapping from Pokémon types to colors
 const typeColors = {
-  fire: 'rgba(240, 128, 48, 0.5)',   // #F08030
-  water: 'rgba(104, 144, 240, 0.5)', // #6890F0
-  grass: 'rgba(120, 200, 80, 0.5)',  // #78C850
-  electric: 'rgba(248, 208, 48, 0.5)', // #F8D030
-  ground: 'rgba(224, 192, 104, 0.5)', // #E0C068
-  rock: 'rgba(184, 160, 56, 0.5)',   // #B8A038
-  fairy: 'rgba(238, 153, 172, 0.5)', // #EE99AC
-  poison: 'rgba(160, 64, 160, 0.5)', // #A040A0
-  bug: 'rgba(168, 184, 32, 0.5)',    // #A8B820
-  dragon: 'rgba(112, 56, 248, 0.5)', // #7038F8
-  psychic: 'rgba(248, 88, 136, 0.5)', // #F85888
-  flying: 'rgba(168, 144, 240, 0.5)', // #A890F0
-  fighting: 'rgba(192, 48, 40, 0.5)', // #C03028
-  normal: 'rgba(168, 168, 120, 0.5)', // #A8A878
-  ghost: 'rgba(112, 88, 152, 0.5)',  // #705898
-  dark: 'rgba(112, 88, 72, 0.5)',    // #705848
-  steel: 'rgba(184, 184, 208, 0.5)', // #B8B8D0
-  ice: 'rgba(152, 216, 216, 0.5)',   // #98D8D8
+  fire: 'rgba(240, 128, 48, 0.7)',   // #F08030
+  water: 'rgba(104, 144, 240, 0.7)', // #6890F0
+  grass: 'rgba(120, 200, 80, 0.7)',  // #78C850
+  electric: 'rgba(248, 208, 48, 0.7)', // #F8D030
+  ground: 'rgba(224, 192, 104, 0.7)', // #E0C068
+  rock: 'rgba(184, 160, 56, 0.7)',   // #B8A038
+  fairy: 'rgba(238, 153, 172, 0.7)', // #EE99AC
+  poison: 'rgba(160, 64, 160, 0.7)', // #A040A0
+  bug: 'rgba(168, 184, 32, 0.7)',    // #A8B820
+  dragon: 'rgba(112, 56, 248, 0.7)', // #7038F8
+  psychic: 'rgba(248, 88, 136, 0.7)', // #F85888
+  flying: 'rgba(168, 144, 240, 0.7)', // #A890F0
+  fighting: 'rgba(192, 48, 40, 0.7)', // #C03028
+  normal: 'rgba(168, 168, 120, 0.7)', // #A8A878
+  ghost: 'rgba(112, 88, 152, 0.7)',  // #705898
+  dark: 'rgba(112, 88, 72, 0.7)',    // #705848
+  steel: 'rgba(184, 184, 208, 0.7)', // #B8B8D0
+  ice: 'rgba(152, 216, 216, 0.7)',   // #98D8D8
 };
 
 
 function PokemonCard({ pokemon }) {
   const [mondata, setMondata] = useState(null);
   const [error, setError] = useState(false);
-  const [cardColor, setCardColor] = useState('#FFFFFF'); // Default color
+  const [cardBackground, setCardBackground] = useState('#FFFFFF'); // Default background
 
   useEffect(() => {
     axios
@@ -59,8 +59,17 @@ function PokemonCard({ pokemon }) {
       )
       .then((response) => {
         setMondata(response.data);
-        const firstType = response.data.types[0].type.name;
-        setCardColor(typeColors[firstType] || '#FFFFFF'); // Set card color based on type
+        const types = response.data.types;
+        const firstType = types[0].type.name;
+        const secondType = types[1]?.type.name;
+        
+        if (secondType) {
+          // If there's a second type, create a gradient
+          setCardBackground(`linear-gradient(135deg, ${typeColors[firstType]} 45%, ${typeColors[secondType]} 55%)`);
+        } else {
+          // Otherwise, use a solid color
+          setCardBackground(typeColors[firstType] || '#FFFFFF');
+        }
       })
       .catch((error) => {
         console.error("Error fetching Pokémon data:", error);
@@ -80,7 +89,7 @@ function PokemonCard({ pokemon }) {
     : 0;
 
   return (
-    <Card className="pokemon-card" style={{ backgroundColor: cardColor }}>
+    <Card className="pokemon-card" style={{ background: cardBackground }}>
       <OverlayTrigger
         placement="top"
         overlay={
@@ -108,6 +117,7 @@ function PokemonCard({ pokemon }) {
           {pokemon.pokemon_name.charAt(0).toUpperCase() +
             pokemon.pokemon_name.slice(1)}
         </Card.Title>
+        <hr />
         <Radar
           data={{
             labels: ["Off", "SSu", "ASa", "Blk", "SuS", "ObS"],
@@ -144,6 +154,13 @@ function PokemonCard({ pokemon }) {
             },
           }}
         />
+        <hr />
+        {/* Speed Information */}
+        <div className="pokemon-card-speed">
+          <span>Speed: {speedStat}</span>
+          <br />
+          <span>{pokemon.stats.speed}</span>
+        </div>
         <Link to={`/entry?name=${pokemon.pokemon_name}`}>
           <Button variant="primary" className="pokemon-card-button">
             Contribute your rating!

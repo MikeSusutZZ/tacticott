@@ -207,6 +207,7 @@ function Entry() {
                         defaultValue={formData.speed}
                         required
                       >
+                        <option>Boosted by abilities/moves</option>
                         <option>Doesn't use priority</option>
                         <option>Some use of priority</option>
                         <option>Relies on priority</option>
