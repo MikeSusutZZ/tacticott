@@ -31,7 +31,7 @@ function Home() {
 
   return (
     <Container>
-      <h1 className="text-center my-4">Tacticott</h1>
+      <h1 className="text-center my-4">Tacticott Alpha 0.2</h1>
       <iframe
         title="Tacticott Intro"
         width="100%"
@@ -41,24 +41,17 @@ function Home() {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       ></iframe>
-      <Form className="my-4">
-        <Form.Group>
-          <Form.Control
-            type="text"
-            placeholder="Search for a Pokémon"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-          />
-        </Form.Group>
-        <Button variant="primary" onClick={handleSearch} className="mt-2">Search</Button>
-      </Form>
-      <Row>
-        {pokemonList.map((pokemon, index) => (
-          <Col key={index} md={4} className="mb-4">
-            <PokemonCard pokemon={pokemon} />
-          </Col>
-        ))}
-      </Row>
+      <h2 className="text-center my-4">This is a work in progress!</h2>
+      <p>There are plenty of features yet to come, lots of styling to adjust, and probably some bugs here and there tool.
+          If you have me on discord, please reach out with any suggestions or bug finds!
+          In order to contribute to a pokemons rating, you will need the password, which is being limitedly distributed to avoid trolls until the data is more stable. Thanks for checking out the site while it's still in it's infancy! -ZippidyZap @ VoltageVGC
+      </p>
+      <p>There are a LOT of pokemon that need added, so please click "Make an Entry" at the top to add your favorite mons!</p>
+      <div className="pokemon-card-container">
+      {pokemonList.map(pokemon => (
+        <PokemonCard key={pokemon.pokemon_name} pokemon={pokemon} />
+      ))}
+    </div>
     </Container>
   );
 }

@@ -1,0 +1,40 @@
+/* Entry.css */
+
+/* Container for the Entry form */
+.entry-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Header styles */
+  .entry-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Form styling */
+  .entry-form {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Form control styling */
+  .entry-form-control {
+    margin-bottom: 20px;
+  }
+  
+  /* Button styling */
+  .entry-button {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    border-radius: 5px;
+  }
+  
+  /* Card container */
+  .pokemon-card-container {
+    margin-top: 20px;
+  }
+  

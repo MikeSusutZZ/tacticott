@@ -1,3 +1,4 @@
+const axios = require('axios');
 const Pokemon = require('../models/Pokemon');
 
 // Get all Pokémon
@@ -12,7 +13,7 @@ exports.getAllPokemon = async (req, res) => {
 
 // Get a specific Pokémon by name
 exports.getPokemonByName = async (req, res) => {
-  const { name } = req.params;
+  const name = req.params.name.toLowerCase(); // Normalize name to lowercase
   try {
     const pokemon = await Pokemon.findOne({ pokemon_name: name });
     if (!pokemon) {
@@ -28,18 +29,43 @@ exports.getPokemonByName = async (req, res) => {
 exports.addOrUpdatePokemon = async (req, res) => {
   const { pokemon_name, stats, password } = req.body;
 
+  // Normalize name to lowercase
+  const normalizedPokemonName = pokemon_name.toLowerCase();
+
   // Validate the password
   if (password !== process.env.SECRET_PASSWORD) {
     return res.status(401).send('Unauthorized');
   }
 
   try {
-    let pokemon = await Pokemon.findOne({ pokemon_name });
+    // Check if the Pokémon name is valid by querying the PokéAPI
+    const pokeApiUrl = `https://pokeapi.co/api/v2/pokemon/${normalizedPokemonName}`;
+    let isValidPokemon = false;
+
+    try {
+      await axios.get(pokeApiUrl);
+      isValidPokemon = true;
+    } catch (error) {
+      // If the PokéAPI returns a 404 error, the Pokémon name is invalid
+      if (error.response && error.response.status === 404) {
+        return res.status(400).send('Invalid Pokémon name');
+      } else {
+        console.error('Error fetching Pokémon from PokéAPI:', error);
+        return res.status(500).send('Error checking Pokémon name with PokéAPI');
+      }
+    }
+
+    if (!isValidPokemon) {
+      return res.status(400).send('Invalid Pokémon name');
+    }
+
+    // If valid, proceed with adding or updating the Pokémon in the database
+    let pokemon = await Pokemon.findOne({ pokemon_name: normalizedPokemonName });
 
     if (!pokemon) {
       // Create a new Pokémon entry if it doesn't exist
       pokemon = new Pokemon({
-        pokemon_name,
+        pokemon_name: normalizedPokemonName,
         stats: {
           speed: stats.speed, // Directly store the string value for speed
           off: { average: stats.off, entries: [stats.off] },
@@ -58,7 +84,7 @@ exports.addOrUpdatePokemon = async (req, res) => {
       const updateStat = (statName) => {
         pokemon.stats[statName].entries.push(stats[statName]);
         const sum = pokemon.stats[statName].entries.reduce((a, b) => a + b, 0);
-        pokemon.stats[statName].average = sum / pokemon.stats[statName].entries.length;
+        pokemon.stats[statName].average = Math.round(sum / pokemon.stats[statName].entries.length);
       };
 
       // Update each numerical stat
@@ -74,7 +100,7 @@ exports.addOrUpdatePokemon = async (req, res) => {
     }
 
     await pokemon.save();
-    res.status(200).send('Pokemon stats updated successfully');
+    res.status(200).send('Pokémon stats updated successfully');
   } catch (error) {
     console.error('Error updating Pokémon stats:', error);
     res.status(500).send('Server error');

@@ -1,0 +1,51 @@
+/* PokemonCard.css */
+
+/* Container that holds the cards */
+.pokemon-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the cards */
+    gap: 15px; /* Space between cards */
+  }
+  
+  /* Individual card styling */
+  .pokemon-card {
+    flex: 1 1 calc(20% - 30px); /* Flexible basis with a responsive width, adjusts automatically */
+    max-width: 250px;
+    min-width: 250px;
+    max-height: 550px;
+    margin: 5px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pokemon-card-img {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px 15px 0 0;
+  }
+  
+  .pokemon-card-body {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .pokemon-card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .pokemon-card-button {
+    margin-top: 15px;
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    border-radius: 5px;
+  }
+  
+  .pokemon-card-svg {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
