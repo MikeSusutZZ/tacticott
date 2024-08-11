@@ -5,7 +5,7 @@ import axios from 'axios';
 import PokemonCard from './PokemonCard';
 import './Entry.css'; // Import the CSS file
 
-const backend = 'https://tacticott-backend.vercel.app/';
+const backend = 'https://tacticott.onrender.com';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);

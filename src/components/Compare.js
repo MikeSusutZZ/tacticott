@@ -13,7 +13,7 @@ function Compare() {
     e.preventDefault();
     try {
       const responses = await Promise.all(
-        pokemonNames.filter(name => name).map(name => axios.get(`https://tacticott-backend.vercel.app/api/pokemon/${name.toLowerCase()}`))
+        pokemonNames.filter(name => name).map(name => axios.get(`https://tacticott.onrender.com/api/pokemon/${name.toLowerCase()}`))
       );
       setComparisonData(responses.map(res => res.data));
     } catch (error) {
