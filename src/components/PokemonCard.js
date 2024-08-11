@@ -23,6 +23,17 @@ ChartJS.register(
     Legend
 );
 
+function getSpeedWarning(pokemon){
+  switch(pokemon.stats.speed) {
+    case "Some use of priority":
+      return "*"
+    case "Relies on priority":
+      return "!"
+    default:
+      return ""
+  }
+}
+
 function PokemonCard({ pokemon }) {
     const [mondata, setMondata] = useState(null);
     const [error, setError] = useState(false);
@@ -55,12 +66,11 @@ function PokemonCard({ pokemon }) {
         <Card.Title>{pokemon.pokemon_name.charAt(0).toUpperCase() + pokemon.pokemon_name.slice(1)}</Card.Title>
         <Radar
             data={{
-              labels: ['Speed', 'Offense', 'Self Set-up', 'Allied Set-up', 'Set-up Support', 'Obs Support', 'Bulk'],
+              labels: ['Offense', 'Self Set-up', 'Allied Set-up', 'Set-up Support', 'Obs Support', 'Bulk'],
               datasets: [
                 {
                     label: pokemon.pokemon_name.charAt(0).toUpperCase() + pokemon.pokemon_name.slice(1),
                   data: [
-                    speedStat,  // Use the speed stat from mondata
                     pokemon.stats.off.average,
                     pokemon.stats.ssu.average,
                     pokemon.stats.asa.average,

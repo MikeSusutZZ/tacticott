@@ -64,11 +64,10 @@ function Compare() {
           </Row>
           <Radar
             data={{
-              labels: ['Speed', 'Off', 'SSu', 'ASa', 'SuS', 'ObS', 'Blk'],
+              labels: ['Off', 'SSu', 'ASa', 'SuS', 'ObS', 'Blk'],
               datasets: comparisonData.map((pokemon, index) => ({
                 label: pokemon.pokemon_name,
                 data: [
-                  pokemon.stats.speed.average,
                   pokemon.stats.off.average,
                   pokemon.stats.ssu.average,
                   pokemon.stats.asa.average,

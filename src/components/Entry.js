@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
@@ -15,20 +15,37 @@ function Entry() {
   const pokemonName = query.get('name');
   const [monData, setMonData] = useState(null);
   const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    off: 0,
+    ssu: 0,
+    asa: 0,
+    sus: 0,
+    obs: 0,
+    blk: 0,
+    speed: 'Doesn\'t use priority',
+  });
 
-  // Fetch Pokémon data from your backend (database)
-  useEffect(() => {
-    if (pokemonName) {
-      axios.get(`${backend}/api/pokemon/${pokemonName.toLowerCase()}`) // Use the correct API route
-        .then(response => {
-          setMonData(response.data); // Set the entire response data to monData
-        })
-        .catch(error => {
-          console.error('Error fetching Pokémon data from backend:', error);
-          setMonData(null);
+  // Fetch Pokémon data from your backend (database) when the component mounts
+  if (pokemonName && !monData) {
+    axios.get(`${backend}/api/pokemon/${pokemonName.toLowerCase()}`)
+      .then(response => {
+        setMonData(response.data); // Set the entire response data to monData
+        // Set form data based on fetched data
+        setFormData({
+          off: response.data.stats.off || 0,
+          ssu: response.data.stats.ssu || 0,
+          asa: response.data.stats.asa || 0,
+          sus: response.data.stats.sus || 0,
+          obs: response.data.stats.obs || 0,
+          blk: response.data.stats.blk || 0,
+          speed: response.data.stats.speed || 'Doesn\'t use priority',
         });
-    }
-  }, [pokemonName]);
+      })
+      .catch(error => {
+        console.error('Error fetching Pokémon data from backend:', error);
+        setMonData(null);
+      });
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +53,7 @@ function Entry() {
     try {
       const response = await axios.post(`${backend}/api/pokemon`, {
         pokemon_name: pokemonName,
-        stats: monData.stats,
+        stats: formData, // Use formData for submission
         password,
       });
 
@@ -48,13 +65,11 @@ function Entry() {
     }
   };
 
-  const handleStatChange = (stat, value) => {
-    setMonData({
-      ...monData,
-      stats: {
-        ...monData.stats,
-        [stat]: value
-      }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
     });
   };
 
@@ -70,8 +85,9 @@ function Entry() {
                   <Form.Label>Offense (0-100)</Form.Label>
                   <Form.Control
                     type="number"
-                    value={monData ? monData.stats.off : 0}
-                    onChange={e => handleStatChange('off', e.target.value)}
+                    name="off"
+                    value={formData.off}
+                    onChange={handleInputChange}
                     min="0"
                     max="100"
                     required
@@ -83,8 +99,9 @@ function Entry() {
                   <Form.Label>Self Set-up (0-100)</Form.Label>
                   <Form.Control
                     type="number"
-                    value={monData ? monData.stats.ssu : 0}
-                    onChange={e => handleStatChange('ssu', e.target.value)}
+                    name="ssu"
+                    value={formData.ssu}
+                    onChange={handleInputChange}
                     min="0"
                     max="100"
                     required
@@ -96,8 +113,9 @@ function Entry() {
                   <Form.Label>Ally Setability (0-100)</Form.Label>
                   <Form.Control
                     type="number"
-                    value={monData ? monData.stats.asa : 0}
-                    onChange={e => handleStatChange('asa', e.target.value)}
+                    name="asa"
+                    value={formData.asa}
+                    onChange={handleInputChange}
                     min="0"
                     max="100"
                     required
@@ -109,8 +127,9 @@ function Entry() {
                   <Form.Label>Set up Support (0-100)</Form.Label>
                   <Form.Control
                     type="number"
-                    value={monData ? monData.stats.sus : 0}
-                    onChange={e => handleStatChange('sus', e.target.value)}
+                    name="sus"
+                    value={formData.sus}
+                    onChange={handleInputChange}
                     min="0"
                     max="100"
                     required
@@ -122,8 +141,9 @@ function Entry() {
                   <Form.Label>Obstructive Support (0-100)</Form.Label>
                   <Form.Control
                     type="number"
-                    value={monData ? monData.stats.obs : 0}
-                    onChange={e => handleStatChange('obs', e.target.value)}
+                    name="obs"
+                    value={formData.obs}
+                    onChange={handleInputChange}
                     min="0"
                     max="100"
                     required
@@ -135,8 +155,9 @@ function Entry() {
                   <Form.Label>Bulk (0-100)</Form.Label>
                   <Form.Control
                     type="number"
-                    value={monData ? monData.stats.blk : 0}
-                    onChange={e => handleStatChange('blk', e.target.value)}
+                    name="blk"
+                    value={formData.blk}
+                    onChange={handleInputChange}
                     min="0"
                     max="100"
                     required
@@ -148,8 +169,9 @@ function Entry() {
                   <Form.Label>Speed</Form.Label>
                   <Form.Control
                     as="select"
-                    value={monData ? monData.stats.speed : 'Doesn\'t use priority'}
-                    onChange={e => handleStatChange('speed', e.target.value)}
+                    name="speed"
+                    value={formData.speed}
+                    onChange={handleInputChange}
                     required
                   >
                     <option>Doesn't use priority</option>
