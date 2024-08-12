@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Entry from './components/Entry';
 import ThankYou from './components/ThankYou';
 import Compare from './components/Compare';
+import './App.css'
 
 function App() {
   return (

@@ -50,3 +50,10 @@
   top: 10px;
   right: 10px;
 }
+
+@media (prefers-color-scheme: dark) {
+  /* Dark theme - Fully black background */
+  .pokemon-card {
+    color: #ffffff !important;
+  }
+}
