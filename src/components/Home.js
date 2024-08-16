@@ -58,7 +58,7 @@ function Home() {
       <p>
         There are a LOT of pokemon that need added, so please click "Make an
         Entry" at the top to add your favorite mons! If you are new to the site and not familiar with how
-        the stats on this site work, please check out "About", or watch the tutorial video above!
+        the stats on this site work, please check out "Stat Explanations", or watch the tutorial video above!
       </p>
       <div className="pokemon-card-container">
         {pokemonList.map((pokemon) => (
