@@ -45,9 +45,9 @@ function Home() {
         allowFullScreen
       ></iframe>
 
-      <h2 className="text-center my-4">This is a work in progress!</h2>
+      <h2 className="text-center my-4">This is a work in progress! The database takes up to a minute to load</h2>
       <p>
-        There are plenty of features yet to come, lots of styling to adjust, and
+        There are plenty of features yet to come, lots of styling to adjust, optimization to do and
         probably some bugs here and there tool. If you have me on discord,
         please reach out with any suggestions or bug finds! In order to
         contribute to a pokemons rating, you will need the password, which is
