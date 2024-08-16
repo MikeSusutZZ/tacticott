@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Entry from './components/Entry';
 import ThankYou from './components/ThankYou';
 import Compare from './components/Compare';
+import About from './components/About'
 import './App.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">Home</Nav.Link>
+              <Nav.Link as={Link} to="about">Stat Explanations</Nav.Link>
               <Nav.Link as={Link} to="/compare">Compare / Search</Nav.Link>
               <Nav.Link as={Link} to="/entry">Make an Entry</Nav.Link>
             </Nav>
@@ -26,11 +28,12 @@ function App() {
 
       <Container className="mt-3">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/entry" element={<Entry />} />
-          <Route path="/thank-you" element={<ThankYou />} />
-          <Route path="/compare" element={<Compare />} />
-        </Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/entry" element={<Entry />} />
+        <Route path="/thank-you" element={<ThankYou />} />
+        <Route path="/compare" element={<Compare />} />
+        <Route path="/about" element={<About />} /> {/* Add About route */}
+      </Routes>
       </Container>
     </Router>
   );
