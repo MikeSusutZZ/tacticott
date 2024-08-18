@@ -45,7 +45,7 @@ function Home() {
         allowFullScreen
       ></iframe>
 
-      <h2 className="text-center my-4">This is a work in progress! The database takes up to a minute to load</h2>
+      <h2 className="text-center my-4">This is a work in progress! This site runs on free services that take up to a minute to load, and sometimes require a page refresh</h2>
       <p>
         There are plenty of features yet to come, lots of styling to adjust, optimization to do and
         probably some bugs here and there tool. If you have me on discord,
