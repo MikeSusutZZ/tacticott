@@ -48,7 +48,7 @@ function Home() {
       <h2 className="text-center my-4">This is a work in progress!</h2>
       <p>
         There are plenty of features yet to come, lots of styling to adjust, and
-        probably some bugs here and there tool. If you have me on discord,
+        probably some bugs here and there too. If you have me on discord,
         please reach out with any suggestions or bug finds! In order to
         contribute to a pokemons rating, you will need the password, which is
         being limitedly distributed to avoid trolls until the data is more
