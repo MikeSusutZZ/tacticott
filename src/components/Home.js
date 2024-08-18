@@ -34,7 +34,7 @@ function Home() {
 
   return (
     <Container>
-      <h1 className="text-center my-4">Tacticott Alpha 0.2</h1>
+      <h1 className="text-center my-4">Tacticott Alpha 0.3</h1>
       <iframe
         title="Tacticott Intro"
         width="100%"
@@ -45,7 +45,7 @@ function Home() {
         allowFullScreen
       ></iframe>
 
-      <h2 className="text-center my-4">This is a work in progress!</h2>
+      <h2 className="text-center my-4">This is a work in progress! This site runs on free services that take up to a minute to load, and sometimes require a page refresh</h2>
       <p>
         There are plenty of features yet to come, lots of styling to adjust, and
         probably some bugs here and there too. If you have me on discord,
@@ -57,7 +57,8 @@ function Home() {
       </p>
       <p>
         There are a LOT of pokemon that need added, so please click "Make an
-        Entry" at the top to add your favorite mons!
+        Entry" at the top to add your favorite mons! If you are new to the site and not familiar with how
+        the stats on this site work, please check out "Stat Explanations", or watch the tutorial video above!
       </p>
       <div className="pokemon-card-container">
         {pokemonList.map((pokemon) => (

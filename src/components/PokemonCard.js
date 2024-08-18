@@ -47,6 +47,40 @@ const typeColors = {
 };
 
 
+const options = {
+  scales: {
+    r: {
+      beginAtZero: true,
+      max: 100,
+      ticks: {
+        display: false, // This hides the numbers
+        stepSize: 20,
+      },
+    },
+  },
+  plugins: {
+    tooltip: {
+      callbacks: {
+        title: function (tooltipItems) {
+          const fullNames = {
+            "Off": "Offense",
+            "SSu": "Self Set-up",
+            "ASa": "Allied Set-up",
+            "Blk": "Bulk",
+            "SuS": "Set-up Support",
+            "ObS": "Obstructive Support"
+          };
+          const label = tooltipItems[0].label;
+          return fullNames[label];
+        }
+      }
+    }
+  }
+};
+
+
+
+
 function PokemonCard({ pokemon }) {
   const [mondata, setMondata] = useState(null);
   const [error, setError] = useState(false);
@@ -62,7 +96,7 @@ function PokemonCard({ pokemon }) {
         const types = response.data.types;
         const firstType = types[0].type.name;
         const secondType = types[1]?.type.name;
-        
+
         if (secondType) {
           // If there's a second type, create a gradient
           setCardBackground(`linear-gradient(135deg, ${typeColors[firstType]} 45%, ${typeColors[secondType]} 55%)`);
@@ -118,42 +152,32 @@ function PokemonCard({ pokemon }) {
             pokemon.pokemon_name.slice(1)}
         </Card.Title>
         <hr />
-        <Radar
-          data={{
-            labels: ["Off", "SSu", "ASa", "Blk", "SuS", "ObS"],
-            datasets: [
-              {
-                label:
-                  pokemon.pokemon_name.charAt(0).toUpperCase() +
-                  pokemon.pokemon_name.slice(1),
-                data: [
-                  pokemon.stats.off.average,
-                  pokemon.stats.ssu.average,
-                  pokemon.stats.asa.average,
-                  pokemon.stats.blk.average,
-                  pokemon.stats.sus.average,
-                  pokemon.stats.obs.average,
-                ],
-                backgroundColor: "rgba(34, 202, 236, 0.2)",
-                borderColor: "rgba(34, 202, 236, 1)",
-                borderWidth: 2,
-              },
-            ],
-          }}
-          options={{
-            scales: {
-              r: {
-                beginAtZero: true,
-                max: 100,
-                ticks: {
-                  display: false, // This hides the numbers
-                  stepSize: 20,
+        <div className="pokemon-card-radar-container">
+          <Radar
+            data={{
+              labels: ["Off", "SSu", "ASa", "Blk", "SuS", "ObS"],
+              datasets: [
+                {
+                  label:
+                    pokemon.pokemon_name.charAt(0).toUpperCase() +
+                    pokemon.pokemon_name.slice(1),
+                  data: [
+                    pokemon.stats.off.average,
+                    pokemon.stats.ssu.average,
+                    pokemon.stats.asa.average,
+                    pokemon.stats.blk.average,
+                    pokemon.stats.sus.average,
+                    pokemon.stats.obs.average,
+                  ],
+                  backgroundColor: "rgba(34, 202, 236, 0.2)",
+                  borderColor: "rgba(34, 202, 236, 1)",
+                  borderWidth: 2,
                 },
-              },
-              
-            },
-          }}
-        />
+              ],
+            }}
+            options={options}
+          />
+        </div>
         <hr />
         {/* Speed Information */}
         <div className="pokemon-card-speed">
