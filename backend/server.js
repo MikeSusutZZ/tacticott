@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 // Define routeshttps://github.com/MikeSusutZZ/tacticott.git
-app.use('/api/pokemon', pokemonRoutes);
+app.use('/tacticott/api/pokemon', pokemonRoutes);
 
 // Connect to MongoDB
 // mongoose.connect(process.env.MONGODB_URI, {
