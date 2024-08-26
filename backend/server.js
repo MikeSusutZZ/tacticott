@@ -16,16 +16,16 @@ app.use(cors());
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// Define routeshttps://github.com/MikeSusutZZ/tacticott.git
-app.use('/tacticott/api/pokemon', pokemonRoutes);
+// Define routes
+app.use('/api/pokemon', pokemonRoutes);
 
 // Connect to MongoDB
-// mongoose.connect(process.env.MONGODB_URI, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// })
-// .then(() => console.log('MongoDB connected'))
-// .catch((err) => console.log(err));
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connected'))
+.catch((err) => console.log(err));
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server running on port ${port}`);
